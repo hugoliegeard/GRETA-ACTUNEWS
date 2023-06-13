@@ -5,114 +5,49 @@
     # Récupération de mon paramètre "name" dans l'URL
     # print_r( $_GET['name'] );
     # $category = isset($_GET['name']) ? $_GET['name'] : 'Politique'; // Condition Ternaire
-    $category = $_GET['name'] ?? 'Politique';  // Condition ternaire réduite
+    $slug = $_GET['name'] ?? 'politique';  // Condition ternaire réduite
+
+    # Récupérer la catégorie
+    $category = getCategoryBySlug($slug);
+    # debug($category);
+
+    # Récupération des articles
+    $posts = getPostsByCategory($category['id']);
+    # debug($posts);
 ?>
 </pre>
 <!-- TITRE DE LA PAGE -->
 <div class="p-3 mx-auto text-center">
-    <h1 class="display-4"><?= $category ?></h1>
+    <h1 class="display-4"><?= $category['name'] ?></h1>
 </div>
 
 <!-- CONTENU DE LA PAGE -->
 <div class="py-5 bg-light">
     <div class="container">
         <div class="row">
-            <div class="col-md-4 mt-4">
-                <div class="card shadow-sm">
-                    <img class="card-img-top"
-                         src="https://picsum.photos/400/250" alt="[PLACEHOLDER]">
-                    <div class="card-body">
-                        <h2 class="card-title">[TITRE]</h2>
-                        <div class="card-text">[DESCRIPTION]</div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">[AUTEUR]</small>
-                            <a href="#" class="btn btn-dark">
-                                Lire la suite
-                            </a>
-                        </div>
-                    </div>
+            <?php if (empty($posts)) : ?>
+                <div class="alert alert-info">
+                    Pas d'article dans cette catégorie.
                 </div>
-            </div>
-            <div class="col-md-4 mt-4">
-                <div class="card shadow-sm">
-                    <img class="card-img-top"
-                         src="https://picsum.photos/400/250" alt="[PLACEHOLDER]">
-                    <div class="card-body">
-                        <h2 class="card-title">[TITRE]</h2>
-                        <div class="card-text">[DESCRIPTION]</div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">[AUTEUR]</small>
-                            <a href="#" class="btn btn-dark">
-                                Lire la suite
-                            </a>
+            <?php endif ?>
+            <?php foreach ($posts as $post) : ?>
+                <div class="col-md-4 mt-4">
+                    <div class="card shadow-sm">
+                        <img class="card-img-top"
+                             src="<?= $post['image'] ?>" alt="<?= $post['title'] ?>">
+                        <div class="card-body">
+                            <h2 class="card-title fs-4 display-1"><?= $post['title'] ?></h2>
+                            <div class="card-text"><?= summarize($post['content'], 150) ?></div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted"><?= $post['firstname'] ?> <?= $post['lastname'] ?></small>
+                                <a href="article.php?slug=<?= $post['postSlug'] ?>" class="btn btn-dark">
+                                    Lire la suite
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mt-4">
-                <div class="card shadow-sm">
-                    <img class="card-img-top"
-                         src="https://picsum.photos/400/250" alt="[PLACEHOLDER]">
-                    <div class="card-body">
-                        <h2 class="card-title">[TITRE]</h2>
-                        <div class="card-text">[DESCRIPTION]</div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">[AUTEUR]</small>
-                            <a href="#" class="btn btn-dark">
-                                Lire la suite
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mt-4">
-                <div class="card shadow-sm">
-                    <img class="card-img-top"
-                         src="https://picsum.photos/400/250" alt="[PLACEHOLDER]">
-                    <div class="card-body">
-                        <h2 class="card-title">[TITRE]</h2>
-                        <div class="card-text">[DESCRIPTION]</div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">[AUTEUR]</small>
-                            <a href="#" class="btn btn-dark">
-                                Lire la suite
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mt-4">
-                <div class="card shadow-sm">
-                    <img class="card-img-top"
-                         src="https://picsum.photos/400/250" alt="[PLACEHOLDER]">
-                    <div class="card-body">
-                        <h2 class="card-title">[TITRE]</h2>
-                        <div class="card-text">[DESCRIPTION]</div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">[AUTEUR]</small>
-                            <a href="#" class="btn btn-dark">
-                                Lire la suite
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mt-4">
-                <div class="card shadow-sm">
-                    <img class="card-img-top"
-                         src="https://picsum.photos/400/250" alt="[PLACEHOLDER]">
-                    <div class="card-body">
-                        <h2 class="card-title">[TITRE]</h2>
-                        <div class="card-text">[DESCRIPTION]</div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">[AUTEUR]</small>
-                            <a href="#" class="btn btn-dark">
-                                Lire la suite
-                            </a>
-                        </div>
-                    </div>
-                </div> <!-- ./card -->
-            </div> <!-- ./col-md-4 -->
+                    </div> <!-- ./card -->
+                </div> <!-- ./col-md-4 -->
+            <?php endforeach; ?>
         </div> <!-- ./row -->
     </div> <!-- ./container -->
 </div> <!-- ./bg-light -->

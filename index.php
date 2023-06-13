@@ -1,5 +1,13 @@
 <!-- EN-TETE DE PAGE -->
-<?php require_once 'partials/header.php' ?>
+<?php
+
+# Importation du header
+require_once 'partials/header.php';
+
+# Récupération des articles
+$posts = getPosts(6);
+
+?>
 
 <!-- TITRE DE LA PAGE -->
 <div class="p-3 mx-auto text-center">
@@ -10,102 +18,24 @@
 <div class="py-5 bg-light">
     <div class="container">
         <div class="row">
-            <div class="col-md-4 mt-4">
-                <div class="card shadow-sm">
-                    <img class="card-img-top"
-                         src="https://picsum.photos/400/250" alt="[PLACEHOLDER]">
-                    <div class="card-body">
-                        <h2 class="card-title">[TITRE]</h2>
-                        <div class="card-text">[DESCRIPTION]</div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">[AUTEUR]</small>
-                            <a href="#" class="btn btn-dark">
-                                Lire la suite
-                            </a>
+            <?php foreach ($posts as $post) : ?>
+                <div class="col-md-4 mt-4">
+                    <div class="card shadow-sm">
+                        <img class="card-img-top"
+                             src="<?= $post['image'] ?>" alt="<?= $post['title'] ?>">
+                        <div class="card-body">
+                            <h2 class="card-title fs-4 display-1"><?= $post['title'] ?></h2>
+                            <div class="card-text"><?= summarize($post['content'], 150) ?></div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted"><?= $post['firstname'] ?> <?= $post['lastname'] ?></small>
+                                <a href="article.php?slug=<?= $post['postSlug'] ?>" class="btn btn-dark">
+                                    Lire la suite
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mt-4">
-                <div class="card shadow-sm">
-                    <img class="card-img-top"
-                         src="https://picsum.photos/400/250" alt="[PLACEHOLDER]">
-                    <div class="card-body">
-                        <h2 class="card-title">[TITRE]</h2>
-                        <div class="card-text">[DESCRIPTION]</div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">[AUTEUR]</small>
-                            <a href="#" class="btn btn-dark">
-                                Lire la suite
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mt-4">
-                <div class="card shadow-sm">
-                    <img class="card-img-top"
-                         src="https://picsum.photos/400/250" alt="[PLACEHOLDER]">
-                    <div class="card-body">
-                        <h2 class="card-title">[TITRE]</h2>
-                        <div class="card-text">[DESCRIPTION]</div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">[AUTEUR]</small>
-                            <a href="#" class="btn btn-dark">
-                                Lire la suite
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mt-4">
-                <div class="card shadow-sm">
-                    <img class="card-img-top"
-                         src="https://picsum.photos/400/250" alt="[PLACEHOLDER]">
-                    <div class="card-body">
-                        <h2 class="card-title">[TITRE]</h2>
-                        <div class="card-text">[DESCRIPTION]</div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">[AUTEUR]</small>
-                            <a href="#" class="btn btn-dark">
-                                Lire la suite
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mt-4">
-                <div class="card shadow-sm">
-                    <img class="card-img-top"
-                         src="https://picsum.photos/400/250" alt="[PLACEHOLDER]">
-                    <div class="card-body">
-                        <h2 class="card-title">[TITRE]</h2>
-                        <div class="card-text">[DESCRIPTION]</div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">[AUTEUR]</small>
-                            <a href="#" class="btn btn-dark">
-                                Lire la suite
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mt-4">
-                <div class="card shadow-sm">
-                    <img class="card-img-top"
-                         src="https://picsum.photos/400/250" alt="[PLACEHOLDER]">
-                    <div class="card-body">
-                        <h2 class="card-title">[TITRE]</h2>
-                        <div class="card-text">[DESCRIPTION]</div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">[AUTEUR]</small>
-                            <a href="#" class="btn btn-dark">
-                                Lire la suite
-                            </a>
-                        </div>
-                    </div>
-                </div> <!-- ./card -->
-            </div> <!-- ./col-md-4 -->
+                    </div> <!-- ./card -->
+                </div> <!-- ./col-md-4 -->
+            <?php endforeach; ?>
         </div> <!-- ./row -->
     </div> <!-- ./container -->
 </div> <!-- ./bg-light -->

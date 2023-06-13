@@ -19,8 +19,8 @@
                 </li>
                 <?php foreach ($categories as $category) { ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="categorie.php?name=<?= $category ?>">
-                            <?= $category ?>
+                        <a class="nav-link" href="categorie.php?name=<?= $category['slug'] ?>">
+                            <?= $category['name'] ?>
                         </a>
                     </li>
                 <?php } ?>

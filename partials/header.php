@@ -1,7 +1,15 @@
 <?php
 
-    # Importation des fonctins de notre site
-    require_once 'functions/categorie.function.php';
+    # Importation des constantes
+    require_once 'config/config.php';
+
+    # Importation de la connexion à la BDD
+    require_once 'config/database.php';
+
+    # Importation des fonctions de notre site
+    require_once 'functions/global.function.php';
+    require_once 'functions/category.function.php';
+    require_once 'functions/post.function.php';
 
 ?>
 <!doctype html>
