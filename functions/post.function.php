@@ -101,3 +101,32 @@ function getOnePostBySlug(string $slug): mixed
     # Retour du résultat
     return $query->fetch();
 }
+
+/**
+ * Permet d'insérer un nouvel article
+ * dans la base de donnée.
+ * @param string $title
+ * @param string $slug
+ * @param int $id_category
+ * @param int $id_user
+ * @param string $content
+ * @param string $image
+ * @return false|string
+ */
+function insertPost(string $title, string $slug, int $id_category, int $id_user, string $content, string $image): bool|string
+{
+    global $dbh;
+    $sql = "INSERT INTO post (title, slug, id_category, id_user, content, image, createdAt, publishedAt) VALUES (:title, :slug, :id_category, :id_user, :content, :image, :createdAt, :publishedAt)";
+    $query = $dbh->prepare($sql);
+    $query->bindValue('title', $title, PDO::PARAM_STR);
+    $query->bindValue('slug', $slug);
+    $query->bindValue('id_category', $id_category, PDO::PARAM_INT);
+    $query->bindValue('id_user', $id_user, PDO::PARAM_INT);
+    $query->bindValue('content', $content);
+    $query->bindValue('image', $image);
+    $query->bindValue('createdAt', (new DateTime())->format('Y-m-d H:i:s'));
+    $query->bindValue('publishedAt', (new DateTime())->format('Y-m-d H:i:s'));
+
+    # Si l'article a bien été inséré, je retourne son ID, sinon faux.
+    return $query->execute() ? $dbh->lastInsertId() : false;
+}

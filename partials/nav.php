@@ -15,11 +15,11 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto text-center">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php">Accueil</a>
+                    <a class="nav-link" href="<?= generateUrl('accueil.html') ?>">Accueil</a>
                 </li>
                 <?php foreach ($categories as $category) { ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="categorie.php?name=<?= $category['slug'] ?>">
+                        <a class="nav-link" href="<?= generateUrl($category['slug']) ?>">
                             <?= $category['name'] ?>
                         </a>
                     </li>

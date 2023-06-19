@@ -14,6 +14,20 @@ function debug($debug): void
 }
 
 /**
+ * Debut et coupe l'execution du programme.
+ * Dd signifie : dump and die.
+ * @param $debug
+ * @return void
+ */
+function dd($debug): void
+{
+    echo "<pre>";
+    print_r($debug);
+    echo "</pre>";
+    die;
+}
+
+/**
  * Permet d'afficher un résumé
  * de x mots à partir d'un texte.
  * @param $text
@@ -42,6 +56,41 @@ function summarize($text, int $limit = 80): string
 }
 
 /**
+ * Permet de générer un alias à partir d'une
+ * chaine de caractère.
+ * https://stackoverflow.com/questions/2955251/php-function-to-make-slug-url-string
+ * @param $text
+ * @param string $divider
+ * @return string
+ */
+function slugify($text, string $divider = '-'): string
+{
+    // replace non letter or digits by divider
+    $text = preg_replace('~[^\pL\d]+~u', $divider, $text);
+
+    // transliterate
+    $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+
+    // remove unwanted characters
+    $text = preg_replace('~[^-\w]+~', '', $text);
+
+    // trim
+    $text = trim($text, $divider);
+
+    // remove duplicate divider
+    $text = preg_replace('~-+~', $divider, $text);
+
+    // lowercase
+    $text = strtolower($text);
+
+    if (empty($text)) {
+        return false;
+    }
+
+    return $text;
+}
+
+/**
  * Fonction de redirection
  * @param string $url
  * @return void
@@ -50,4 +99,14 @@ function redirect(string $url): void
 {
     header("Location: $url");
     exit();
+}
+
+/**
+ * Permet de générer une url
+ * @param string $path
+ * @return string
+ */
+function generateUrl(string $path): string
+{
+    return BASE_URL . '/' . $path;
 }
