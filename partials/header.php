@@ -10,6 +10,8 @@
     require_once 'functions/global.function.php';
     require_once 'functions/category.function.php';
     require_once 'functions/post.function.php';
+    require_once 'functions/user.function.php';
+    require_once 'functions/security.function.php';
 
 ?>
 <!doctype html>

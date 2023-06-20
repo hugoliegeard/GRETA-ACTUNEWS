@@ -3,6 +3,11 @@
 # En-tête de page
 require_once 'partials/header.php';
 
+# Vérification des droits d'accès
+if(!isAuthenticated() || (isAuthenticated() && !isGranted('ROLE_ADMIN'))) {
+    redirect("connexion.html?info=Vous n'avez pas les droits suffisants pour cette opération.");
+}
+
 #1. Récupération des informations
 # Initialisation des variables à null.
 $title = $slug = $content = $image = $id_category = $id_user = null;
@@ -75,7 +80,7 @@ if (!empty($_POST)) {
         $id_post = insertPost($title, $slug, $id_category, $id_user, $content, $image);
         if ($id_post) {
             #5. Redirection vers le nouvel article
-            redirect("article.php?slug=$slug");
+            redirect("article.php?info=Félicitation, votre article est en ligne&slug=$slug");
         }
     }
 

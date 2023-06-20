@@ -17,6 +17,7 @@ $post = getOnePostBySlug($_GET['slug']);
     <div class="container">
         <div class="row">
             <div class="col">
+                <?php include_once 'partials/notification.php' ?>
                 <h1 class="display-4"><?= $post['title'] ?></h1>
                 <img src="<?= generateUrl("assets/uploads/posts/".$post['image']) ?>"
                      class="img-fluid"

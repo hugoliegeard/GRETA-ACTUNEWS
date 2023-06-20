@@ -7,6 +7,10 @@ require_once 'partials/header.php';
 # Récupération des articles
 $posts = getPosts(6);
 
+# Vérifie si un user est connecté.
+# debug($_SESSION);
+# debug(isAuthenticated());
+
 ?>
 
 <!-- TITRE DE LA PAGE -->

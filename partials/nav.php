@@ -4,6 +4,9 @@
     $categories = getCategories();
     // print_r( $categories );
 
+    # Récupération de l'utilisateur connecté
+    $user = isAuthenticated();
+
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -26,8 +29,26 @@
                 <?php } ?>
             </ul>
             <div class="text-right">
-                <a href="#" class="nav-item btn btn-outline-info">Connexion</a>
-                <a href="#" class="nav-item btn btn-outline-warning mx-2">Inscription</a>
+                <?php if ($user) : ?>
+
+                    <span class="navbar-text mx-2">Bonjour <strong><?= $user['firstname'] ?></strong>
+                        <em>(<?= $user['roles'] ?>)</em>,</span>
+
+                    <?php if (isGranted('ROLE_ADMIN')) : ?>
+                        <a href="<?= generateUrl('mes-articles.php') ?>"
+                           class="nav-item btn btn-outline-primary">Mes Articles</a>
+                        <a href="<?= generateUrl('admin99562/creer-un-article.html') ?>"
+                           class="nav-item btn btn-outline-warning">Créer un Article</a>
+                    <?php endif ?>
+
+                    <a href="<?= generateUrl('deconnexion.html') ?>"
+                       class="nav-item btn btn-danger">Déconnexion</a>
+                <?php else : ?>
+                    <a href="<?= generateUrl('connexion.html') ?>"
+                       class="nav-item btn btn-outline-info">Connexion</a>
+                    <a href="<?= generateUrl('inscription.html') ?>"
+                       class="nav-item btn btn-outline-warning">Inscription</a>
+                <?php endif ?>
             </div>
         </div> <!-- #/navbarNav -->
     </div> <!-- ./container-fluid -->

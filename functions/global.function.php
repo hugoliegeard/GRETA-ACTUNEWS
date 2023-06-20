@@ -1,5 +1,26 @@
 <?php
 
+session_start(); # Démarrage de la session PHP
+
+/**
+ * Permet de vérifier si un user est connecté.
+ * @return bool|array
+ */
+function isAuthenticated(): bool|array
+{
+    return $_SESSION['user'] ?? false;
+}
+
+/**
+ * Permet de vérifier le "role" d'un utilisateur
+ * @param string $role
+ * @return bool
+ */
+function isGranted(string $role): bool
+{
+    return isset($_SESSION['user']) && ($role === $_SESSION['user']['roles']);
+}
+
 /**
  * Permet de facilité le
  * debug de notre app.
@@ -40,7 +61,7 @@ function summarize($text, int $limit = 80): string
     $string = strip_tags($text);
 
     # Si mon $string est > $limit (80)
-    if(strlen($string) > $limit) {
+    if (strlen($string) > $limit) {
 
         # Je coupe ma chaine à la $limit
         $stringCut = substr($string, 0, $limit);
